@@ -4,6 +4,7 @@
 - September 22, 2020
 - CS76 Artificial Intelligence
 - Prof. Alberto Quattrini Li
+- TAs: Almas Abdibayev, Hunter Gallant, Maxine Perroni-Scharf
 
 ![enter image description here](https://hips.hearstapps.com/pop.h-cdn.co/assets/16/50/1600x800/landscape-1481817257-fox-chicken-corn.jpg?resize=980:*)
 > Photo Source: Popular Mechanics
@@ -53,22 +54,32 @@ In uninformed_search.py, we write the actual strategy algorithms used and create
 
 The model of the code starts with foxes.py. Under foxes.py, the problems are defined using the FoxProblem class offered by FoxProblem.py, and run code into motion by directly calling the search functions.
 
-The search functions takes the problem and create a solution class to store relavant information of the class. 
+The search functions takes the problem and create a solution class to store relavant information of the class. In general, the search functions then create their start node using the problem object and run their own algorithms that utilizes functions built from the FoxProblem class. They use goal_test to check if the running state is at goal, and they use get_successors to get valid successor states that can be reached from the running state.
+
+* Talk more about get_successors *
 
 ## Breadth First Search
 
+* talk about iplementation and include code *
 
 ## Memoizing Depth First Search (Discussion)
 
+Does memoizing dfs save significant memory with respect to breadth-first search?  Why or why not?
+* not nessarily. *
 
 ## Path-Checking Depth First Search
 
+* talk about iplementation and include code *
 
 ## Iterative Deepening Search
 
+* talk about iplementation and include code *
 
 ## Lossy Chicken & Foxes (Discussion)
 
+Every fox knows the saying that you can't make an omelet without breaking a few eggs.  What if, in the service of their faith, some chickens were willing to be made into lunch?  Let us design a problem where no more than E chickens could be eaten, where E is some constant.  
+
+What would the state for this problem be?  What changes would you have to make to your code to implement a solution?  Give an upper bound on the number of possible states for this problem.  (You need not implement anything here.)
 
 
 
