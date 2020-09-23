@@ -11,6 +11,7 @@
 
 * [Introduction](#introduction)
 * [Code Design](#code-design)
+* [Building the Model](#building-the-model)
 
 ## Introduction
 The problem of 3 chickens and 3 foxes crossing a river is a classic brain teaser. It asks, how would you get these animals across the river with a 2-animal boat without losing any chicken, if the foxes would eat the chicken up when the chicken are out-numbered?
@@ -32,13 +33,27 @@ In the graph, green means the states are legal, while the red ones means they ar
 
 Evevery state can be think of as nodes in graph, while actions are the edges. There is an underlying graph of all possible legal states, and there are edges between them. The algorithms that's shown in this report will implicitly search this graph. The graps will not be generated ahead of time, however, but rather it will follow methods that, given a state, generate legal actions and possible successor states, based on the current state and the rules of the game.
 
+Now, let us get into Code Design! Special note: I use the first person plural narrative ("we" "us") in this report merely to add personalness and reflect that while it's an individual project, all of the class are working on this assignment. :sparkles: 
+
 ## Code Design
 
+The code design is relatively simple. In this assignment, we use 4 python files, the first three each containing its own class, while the fourth one "foxes.py" is the main that runs the program:
+- FoxProblem.py
+- SearchSolution.py
+- uninformed_search.py
+- foxes.py
 
+In FoxProblem.py, we build the main problem model into its own class and methods. We'll talk more about this in the [Building the Model](#building-the-model) section. What is to note that this is the starting point. In the main "foxes.py", the problem is stated using the class object offered by FoxProblem.py, which stores the relavant information to the problem (the start state, the goal state, etc). Under FoxProblem.py we also have methods such as goal_test and get_successors to help the search algorithm functions in uninformed_search.py.
+
+In Search Solution.py, we create a solution class object for easy storing of the different solutions and their related properties such as the problem itself, the search strategy (method), the solution path, and a counter of how many nodes were visited through that solution. When returning the solution, it has a toString method which allows it to print out all the relevant information of the solution (or lack thereof) to the problem attempted by the search method. 
+
+In uninformed_search.py, we write the actual strategy algorithms used and create a Searchnode class object to help with the search strategies. Every searchNode class object stores a state, a list of children, and a parent.
 
 ## Building the Model
 
+The model of the code starts with foxes.py. Under foxes.py, the problems are defined using the FoxProblem class offered by FoxProblem.py, and run code into motion by directly calling the search functions.
 
+The search functions takes the problem and create a solution class to store relavant information of the class. 
 
 ## Breadth First Search
 
@@ -52,7 +67,7 @@ Evevery state can be think of as nodes in graph, while actions are the edges. Th
 ## Iterative Deepening Search
 
 
-## Lossy Chicken & Foxes
+## Lossy Chicken & Foxes (Discussion)
 
 
 
