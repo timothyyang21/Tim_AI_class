@@ -15,13 +15,22 @@
 ## Introduction
 The problem of 3 chickens and 3 foxes crossing a river is a classic brain teaser. It asks, how would you get these animals across the river with a 2-animal boat without losing any chicken, if the foxes would eat the chicken up when the chicken are out-numbered?
 
-In this assignment, we're interested in solving this problem using uninformed search strategies through a computer program (Aritificial Intelligence). To that end, we'd need to provide states in which the AI may use to solve the problem. 
+In this assignment, we're interested in solving this problem using uninformed search strategies through a computer program (Aritificial Intelligence). To that end, we'd need to provide **states** in which the AI may use to find the solution to the problem. Indeed, the solution will be a connected sequence of states from the initial state to the goal state; each pair of states is linked by an action.
 
-States are either legal or not legal. The upper bound of all the states, regardless of legality, is 4 * 4 * 2 to the problem of 3 chicken and 3 foxes. We get this number because there's 4 possibilities for the chicken to be on either side of river (3-0, 2-1, 1-2, 0-3), 4 for foxes, and 2 possibilites for the boat, which may either be on one side or another (1-0, 0-1). In general, the upper bound of all states is #c * #f * #b states. 
+The **state** of the system is the information that would be needed to depect the current situation at some point during the task to someone agent, assuming that they already know the rules of the game.  For the chickens and foxes problem, the state could be described as how many chickens and foxes are on each side of the river, and on which side of the river the boat is.  
+
+We do not count constants as states. The constants include the total number of chicken and foxes and the boat size (which holds 2). These can still be changed, however, these are only changed in the problem definition. 
+
+States are either legal or not legal. The upper bound of all the states, regardless of legality, is 4 * 4 * 2 = 16 to the problem of 3 chicken and 3 foxes. We get this number because there's 4 possibilities for the chicken to be on either side of river (3-0, 2-1, 1-2, 0-3), 4 for foxes, and 2 possibilites for the boat, which may either be on one side or another (1-0, 0-1). In general, the upper bound of all states is #c * #f * #b states. 
+
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/demonstration.png" height="60%" width="60%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/demo_states.png" height="60%" width="60%">
 </p>
+
+In the graph, green means the states are legal, while the red ones means they aren't. As one can see from the initial state, out of the 16 possible states, only 3 legal states may be reached by legal actions. Illegal states that may not be reached by legal actions do not have their corresponding action (edge) shown because they won't be taken either way. Legal actions are defined as actions that can be carried out from that state, and don't lead to a state where any chicken is eaten. From the 3 legal states the first state reaches, the light green states are the secondly expanded legal states, while the bright red ones are secondly expanded illegale states. 
+
+Evevery state can be think of as nodes in graph, while actions are the edges. There is an underlying graph of all possible legal states, and there are edges between them. The algorithms that's shown in this report will implicitly search this graph. The graps will not be generated ahead of time, however, but rather it will follow methods that, given a state, generate legal actions and possible successor states, based on the current state and the rules of the game.
 
 ## Code Design
 
