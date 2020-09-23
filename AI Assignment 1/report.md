@@ -1,9 +1,9 @@
 # PA1 Chicken and Foxes
 
-Timothy Yang
-September 22, 2020
-CS76 Artificial Intelligence
-Prof. Alberto Quattrini Li
+- Timothy Yang
+- September 22, 2020
+- CS76 Artificial Intelligence
+- Prof. Alberto Quattrini Li
 
 ![enter image description here](https://hips.hearstapps.com/pop.h-cdn.co/assets/16/50/1600x800/landscape-1481817257-fox-chicken-corn.jpg?resize=980:*)
 > Photo Source: Popular Mechanics
