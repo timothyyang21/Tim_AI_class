@@ -1,10 +1,10 @@
 # PA1 Chicken and Foxes
 
-- Timothy Yang
-- September 22, 2020
-- CS76 Artificial Intelligence
-- Prof. Alberto Quattrini Li
-- TAs: Almas Abdibayev, Hunter Gallant, Maxine Perroni-Scharf
+- Timothy Yang :blush:
+- September 22, 2020 :fallen_leaf:
+- CS76 Artificial Intelligence :robot:
+- Prof. Alberto Quattrini Li :it:
+- TAs: Almas Abdibayev :sparkles:, Hunter Gallant :rocket:, Maxine Perroni-Scharf :unicorn:
 
 ![enter image description here](https://hips.hearstapps.com/pop.h-cdn.co/assets/16/50/1600x800/landscape-1481817257-fox-chicken-corn.jpg?resize=980:*)
 > Photo Source: Popular Mechanics
@@ -16,10 +16,13 @@
 * [Breadth First Search](#breadth-first-search)
 * [Memoizing Depth First Search Discussion](#memoizing-depth-first-search-discussion)
 * [Path-Checking Depth First Search](#path-checking-depth-first-search)
+* [Iterative Deepening Search](#iterative-deepening-search)
+* [Lossy Chicken & Foxes Discussion](#lossy-chicken-&-foxes-discussion)
+* [Conclusion](#conclusion)
 
 
 ## Introduction
-The problem of 3 chickens and 3 foxes crossing a river is a classic brain teaser. It asks, how would you get these animals across the river with a 2-animal boat without losing any chicken, if the foxes would eat the chicken up when the chicken are out-numbered?
+The problem of 3 chickens :chicken: and 3 foxes :fox_face: crossing a river is a classic brain teaser. It asks, how would you get these animals across the river with a 2-animal boat without losing any chicken, if the foxes would eat the chicken up when the chicken are out-numbered?
 
 In this assignment, we're interested in solving this problem using uninformed search strategies through a computer program (Aritificial Intelligence). To that end, we'd need to provide **states** in which the AI may use to find the solution to the problem. Indeed, the solution will be a connected sequence of states from the initial state to the goal state; each pair of states is linked by an action.
 
@@ -130,7 +133,7 @@ Usually path-checing dfs may save more memory than bfs with O(bm) < O(b^d) for d
 The bright green means solution. Notice how the bfs search method, which is noted in pink, reaches the solution node at step 6, while path-checking dfs took 11 steps to reach the solution node. This example is, while exagerated, may very well happen in actual examples where bfs may take more time amd memory than path-checking dfs.
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/dfs%20results.png" height="60%" width="60%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/dfs%20results.png" height="100%" width="100%">
 </p>
 
 As shown in the results, the dfs results in slightly longer solution paths but have visited less nodes than the bfs. For the problem (3,3,1), it visited only 20 nodes before finding a path of length 12. For the problem (5,4,1), it visited 39 nodes before finding a path of length 20. For the problem (5,5,1), it visited 8 nodes before realizing there is no solution path for that there were no more valid unseen states to expand into. As can be shown, dfs results in fewer nodes visited, however, it may not have found the most efficient solution path. (5,4,1) has a shortest path that is length 16.
@@ -146,7 +149,7 @@ Our iterative deepening search combines with dfs search strategy and incremental
 When a ids search is initiated, a new node and new solution will be initalized for the problem, as well as a running counter of depth. This depth will increment by 1 with each iteration of dfs check. In the for loop, the solution path is cleared each time for new solution path to be formed. Then the dfs is called, if the result is cutoff, then it will continue to the next depth. If the result isn't cutoff, then either the right solution or the failure solution will be returned.
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/ids%20results.png" height="60%" width="60%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/ids%20results.png" height="100%" width="100%">
 </p>
 
 For the results of ids search, we first notice a much higher number of nodes visited. However, this number makes sense because it accumulates all the nodes it's visited from depth 1 to the solution depth. For the problem (3,3,1), it visited 162 nodes before finding a path of length 12. For the problem (5,4,1), it visited 387 nodes before finding a path of length 16. For the problem (5,5,1), it visited 26 nodes before realizing there is no solution path due to the fact that there were no more valid unseen states to expand into. Notice how the length path for problem (5,4,1) is 16. This number is much better than our dfs result's 20. This only makes sense, however, because ids always will return the shallowest solution path, if there is one.
@@ -178,10 +181,8 @@ This is the case because the general case's narrow upper bound on the number of 
 
 The first 2c comes from the maximum chicken number on the first side, on the other side, the foxes on the other side can have any combination. Same thing for when there's no chicken on the first side of the river -> c + c = 2c. In between the maximum number of chicken and 0, there's c-1 possibilities where the chicken number must be matched by the number of foxes on the other side. Thus, 2c + (c-1). However, if c > f, then the 2c will be 2f. Also, the c-1 becomes (c-1)(c-f+1) because now the chicken number is greater than the foxes, and the numbers in between the maximum c and 0 may vary, with each difference in c and f creating an additional possibility for chicken and number to exist on both side of the river. taking this form with E, we realize it's simply adding the E number on to the (c-f+1) and reworking the inequality condition to fit the new E in.
 
-I'm less sure about the narrow upper bound on the number of possible states for this problem when E is concerned, so I'm also going to give a loose upper bound. From what was said about how the total number of state must be c * f * b, the very loose upper bound of possible states will be c * f * b * E. Where E is the number of chicken that may be sacrificed, this may be the case because anywhere from E to 0 chicken may be eaten. These are possible states, not necessarily counting into the legality of the states.
+I'm less sure about the narrow upper bound on the number of possible states for this problem when E is concerned, so I'm also going to give a loose upper bound. From what was said about how the total number of state must be c * f * b, the very loose upper bound of possible states will be c * f * b * E. Where E is the number of chicken that may be sacrificed, this may be the case because anywhere from E to 0 chicken may be eaten. These are possible states, not necessarily counting into the legality of the states. 
 
-## Introduction
+## Conclusion
 
-Uninformed search in AI is, while interesting and fulfilling to implement, not the most exciting nor efficient. After all, it's called uninformed search, Which means that the strategies have no additional information about states beyond that provided in the problem definition. These search strategies may be neccessary and powerful in situations where there are limited information, however, I look forward to implement informed strategies and see more efficient results!
-
-
+Uninformed search in AI is, while interesting and fulfilling to implement, not the most exciting nor efficient. After all, it's called uninformed search, Which means that the strategies have no additional information about states beyond that provided in the problem definition. These search strategies may be neccessary and powerful in situations where there are limited information, however, I look forward to implement informed strategies and see more efficient results! :rocket:
