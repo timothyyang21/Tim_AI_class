@@ -116,18 +116,40 @@ The recursive helper function of the dfs is below. Notice, my implementation fol
   <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/recursive%20dfs.png" height="60%" width="60%">
 </p>
 
-The first base case is where the node is the goal. If it is, the solution path is updated by calling the backchaining and return a nice path from end goal to start node following the linked nodes. The second base case happens when the depth limit becomes 0. This is for the ids and will return a result of cutoff for ids, which will indicate to the solution that a cutoff situation occurs. The third base case is when nothing worked, not even cutoff or solution, a failure string will be returned which indicate there's no solution. The recurssive case is the main part. After checking if cutoff didn't happen, states will be generated and be checked against the solution path. Note this solution path is not the final path. The final path only happens after being backchained. If the state is new to the path, a new node is added and that node will be recursed. The tentative solution path will store the node as seen. The recursive function will then recurse give back either cutoff or the goal for result. If result is cutoff, we set the boolean cutoff_occured = True. If result isn't failure, then return the result which is solution. When it bubbles up, it will provide the solution.
-
-
+The first base case is where the node is the goal. If it is, the solution path is updated by calling the backchaining and return a nice path from end goal to start node following the linked nodes. The dfs backchain method is shared with bfs. The second base case happens when the depth limit becomes 0. This is for the ids and will return a result of cutoff for ids, which will indicate to the solution that a cutoff situation occurs. The third base case is when nothing worked, not even cutoff or solution, a failure string will be returned which indicate there's no solution. The recurssive case is the main part. After checking if cutoff didn't happen, states will be generated and be checked against the solution path. Note this solution path is not the final path. The final path only happens after being backchained. If the state is new to the path, a new node is added and that node will be recursed. The tentative solution path will store the node as seen. The recursive function will then recurse give back either cutoff or the goal for result. If result is cutoff, we set the boolean cutoff_occured = True. If result isn't failure, then return the result which is solution. When it bubbles up, it will provide the solution.
 
 The discussion question asks:
 > Does path-checking depth-first search save significant memory with respect to breadth-first search? Draw an example of a graph where path-checking dfs takes much more run-time than breadth-first search; include in your report and discuss.
 
-Not necessarily. Due to graph may have cycles?
+Usually path-checing dfs may save more memory than bfs with O(bm) < O(b^d) for dfs and bfs respectively; however, this is not necessarily the case. Due to graph there may have cycles, and the dfs may be strting on a deep path that's far from the actual solution, while the solution may be on a relatively shallower path. Thus, for a path-checking dfs it may take much more memory and run time than breadth first search. Please refer to the following message:
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/bfs%20example.png" height="60%" width="60%">
+</p>
+
+The bright green means solution. Notice how the bfs search method, which is noted in pink, reaches the solution node at step 6, while path-checking dfs took 11 steps to reach the solution node. This example is, while exagerated, may very well happen in actual examples where bfs may take more time amd memory than path-checking dfs.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/dfs%20results.png" height="60%" width="60%">
+</p>
+
+As shown in the results, the dfs results in slightly longer solution paths but have visited less nodes than the bfs. For the problem (3,3,1), it visited only 20 nodes before finding a path of length 12. For the problem (5,4,1), it visited 39 nodes before finding a path of length 20. For the problem (5,5,1), it visited 8 nodes before realizing there is no solution path for that there were no more valid unseen states to expand into. As can be shown, dfs results in fewer nodes visited, however, it may not have found the most efficient solution path. (5,4,1) has a shortest path that is length 16.
 
 ## Iterative Deepening Search
 
-* talk about iplementation and include code *
+Our iterative deepening search combines with dfs search strategy and incrementally increase depth to find the best depth limit.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/ids.png" height="60%" width="60%">
+</p>
+
+When a ids search is initiated, a new node and new solution will be initalized for the problem, as well as a running counter of depth. This depth will increment by 1 with each iteration of dfs check. In the for loop, the solution path is cleared each time for new solution path to be formed. Then the dfs is called, if the result is cutoff, then it will continue to the next depth. If the result isn't cutoff, then either the right solution or the failure solution will be returned.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/ids%20results.png" height="60%" width="60%">
+</p>
+
+For the results of ids search, we first notice a much higher number of nodes visited. However, this number makes sense because it accumulates all the nodes it's visited from depth 1 to the solution depth. For the problem (3,3,1), it visited 162 nodes before finding a path of length 12. For the problem (5,4,1), it visited 387 nodes before finding a path of length 16. For the problem (5,5,1), it visited 26 nodes before realizing there is no solution path due to the fact that there were no more valid unseen states to expand into. Notice how the length path for problem (5,4,1) is 16. This number is much better than our dfs result's 20. This only makes sense, however, because ids always will return the shallowest solution path, if there is one.
 
 The discussion question asks:
 > On a graph, would it make sense to use path-checking dfs, or would you prefer memoizing dfs in your iterative deepening search?  Consider both time and memory aspects.  (Hint.  If it's not better than bfs, just use bfs.)
