@@ -98,7 +98,7 @@ After checking with the nodes I drew in the intro and checking against print sta
 
 For time complexity, bfs takes O(b^d) time, where b is the branching factor, and d is the depth of the shallowest solution. This is the case because at each depth, each branch is tracked. Memory complexity is similar. The explored set would have O(b^d-1) nodes in the explored set and O(b^d) nodes in the frontier.
 
-## Memoizing Depth First Search (Discussion)
+## Memoizing Depth First Search Discussion
 
 The discussion question asks:
 > Does memoizing dfs save significant memory with respect to breadth-first search?  Why or why not?
@@ -159,7 +159,7 @@ The discussion question asks:
 
 I would prefer to use memoizing dfs in my iterative deepening search. The reasoning is, in an iterative deepning search, the cycle constantly starts a new for path_checking, where they must keep searching for different nodes. However, for memoizing dfs, the memory may be stored through the solution which may be reused for each ids, meaning that each cycle, the memoizing dfs may start with a deeper depth immediately and keep searching for states that are not part of its memory, which saves time. Memory wise both will be using similar amount of memory, which is O(bm) for path checking dfs and O(bm + m) for memoizing dfs. m standing for the maximum depth of the search tree.
 
-## Lossy Chicken & Foxes (Discussion)
+## Lossy Chicken & Foxes Discussion
 
 The Lossy Chicken & Foxes problem goes like this:
 > Every fox knows the saying that you can't make an omelet without breaking a few eggs.  What if, in the service of their faith, some chickens were willing to be made into lunch?  Let us design a problem where no more than E chickens could be eaten, where E is some constant.  
