@@ -70,13 +70,13 @@ As many all know, breadth first search is a simple strategy that first expand th
   <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/bfs.png" height="60%" width="60%">
 </p>
 
-At the start of bfs, the root node is added into the **frontier** queue unless the root node (provided by the search problem) happens to be the goal. The while loop make sure every node in queue is explored. The **explored** set stores the state that has been explored so that no nodes with repeating states will be added into the frontier queue. Then the expansion of the node begins based on the state using the get_successors method, which returns valid successor states that the node is linked to. To make sure they are linked, a child search node is created with that node and corresponding state. The check checks whether the child state is new and unexplored in both the explored set (which includes the ones that has been explored), and the frontier queue, which stores the ones that are just about to be expanded. If the child node past both tests but is not the goal, it will be added to the frontier node. On the other hand, if the node turn out to be the goal, then the **bfs_backchaining** helper method is utilized to return the correct solution path. The solution gets updated and returned to print out the test results. If at the end of the queue there were no more valid unexplored nodes to be explored, the program will return the solution at the end without a solution path. This will prompt the SearchSolution to print out "no solution found after visiting ... nodes" which indicates there's no solution. The number of visited nodes are still available due to the SearchSolution class.
+At the start of bfs, the root node is added into the **frontier** queue unless the root node (provided by the search problem) happens to be the goal. The while loop make sure every node in queue is explored. The **explored** set stores the state that has been explored so that no nodes with repeating states will be added into the frontier queue. Then the expansion of the node begins based on the state using the get_successors method, which returns valid successor states that the node is linked to. To make sure they are linked, a child search node is created with that node and corresponding state. The check checks whether the child state is new and unexplored in both the explored set (which includes the ones that has been explored), and the frontier queue, which stores the ones that are just about to be expanded. If the child node past both tests but is not the goal, it will be added to the frontier node. On the other hand, if the node turn out to be the goal, then the **backchaining** helper method is utilized to return the correct solution path. The solution gets updated and returned to print out the test results. If at the end of the queue there were no more valid unexplored nodes to be explored, the program will return the solution at the end without a solution path. This will prompt the SearchSolution to print out "no solution found after visiting ... nodes" which indicates there's no solution. The number of visited nodes are still available due to the SearchSolution class.
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/bfs_backchaining.png" height="60%" width="60%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/backchaining.png" height="60%" width="60%">
 </p>
 
-The bfs_backchaining method simply extracts the path from the graph after the search has found the goal node. Because we stored a link to a parent node in each child node, by simply using a while loop and set 
+The backchaining method simply extracts the path from the graph after the search has found the goal node. Because we stored a link to a parent node in each child node, by simply using a while loop and set 
 > node = node.parent
 
 each time, we go through all of the nodes in the solution path. This is possible because bfs enables us to know that all the shallower goal nodes must have been generated already and failed the goal test. Note, I use reverse() at the end to save some time, instead of appending new node to the front which takes O(n) times, even though this won't really make a difference in this scenario due to the solution path being relatively short.
@@ -104,17 +104,21 @@ I think not necessarily, memoizing dfs may end up using up similar amount of mem
 
 ## Path-Checking Depth First Search
 
-Unlike bfs, the dfs always expands the deepest node in the current forntier of the search tree before expanding to other branches. Previously we discuss briefly about memoizing dfs, another style of depth-first search keeps track only of states on the path currently being explored, and makes sure that they are not visited again. This ensures that at least the current path does not have any loops. For path-checking dfs, the node that the dfs explored to is always first checked against a running path that's stored by the solution. To do so, we must pass the solution through the parameter of each recursive call of dfs.
+Unlike bfs, the dfs always expands the deepest node in the current forntier of the search tree before expanding to other branches. Previously we discuss briefly about memoizing dfs, another style of depth-first search keeps track only of states on the path currently being explored, and makes sure that they are not visited again. This ensures that at least the current path does not have any loops. For path-checking dfs, the node that the dfs explored to is always first checked against a running path that's stored by the solution. To do so, we must pass the solution through the parameter of each recursive call of dfs. Also note, since our dfs is being used in our ids as well, we have an initial if statement that checks if it's a normal path checking dfs call. If it is, a searchNode will be initialized and the solution is also initialized as well.
 
 <p align="center">
   <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/dfs.png" height="60%" width="60%">
 </p>
 
-The recursive helper function of the dfs is below:
+The recursive helper function of the dfs is below. Notice, my implementation follows the textbook by utilizing **cutoff** and **failure**. These are initialized as strings that shows their respective message. 
 
 <p align="center">
   <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/recursive%20dfs.png" height="60%" width="60%">
 </p>
+
+The first base case is where the node is the goal. If it is, the solution path is updated by calling the backchaining and return a nice path from end goal to start node following the linked nodes. The second base case happens when the depth limit becomes 0. This is for the ids and will return a result of cutoff for ids, which will indicate to the solution that a cutoff situation occurs. The third base case is when nothing worked, not even cutoff or solution, a failure string will be returned which indicate there's no solution. The recurssive case is the main part. After checking if cutoff didn't happen, states will be generated and be checked against the solution path. Note this solution path is not the final path. The final path only happens after being backchained. If the state is new to the path, a new node is added and that node will be recursed. The tentative solution path will store the node as seen. The recursive function will then recurse give back either cutoff or the goal for result. If result is cutoff, we set the boolean cutoff_occured = True. If result isn't failure, then return the result which is solution. When it bubbles up, it will provide the solution.
+
+
 
 The discussion question asks:
 > Does path-checking depth-first search save significant memory with respect to breadth-first search? Draw an example of a graph where path-checking dfs takes much more run-time than breadth-first search; include in your report and discuss.
