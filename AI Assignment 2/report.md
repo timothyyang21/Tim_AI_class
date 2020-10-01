@@ -15,6 +15,7 @@
 * [Building the Model](#building-the-model)
 * [A-star Search](#a-star-search)
 * [Multi-robot Cooperation](#multi-robot-cooperation)
+* [Sensorless Problem Code Model](#sensorless-problem-model)
 * [Blind Robot with Pacman Physics](#blind-robot-with-pacman-physics)
 * [Conclusion](#conclusion)
 
@@ -97,6 +98,9 @@ After checking with the nodes I drew in the intro and checking against print sta
 For time complexity, bfs takes O(b^d) time, where b is the branching factor, and d is the depth of the shallowest solution. This is the case because at each depth, each branch is tracked. Memory complexity is similar. The explored set would have O(b^d-1) nodes in the explored set and O(b^d) nodes in the frontier.
 
 ## Multi-robot Coordination
+
+
+## Sensorless Problem Code Model
 
 
 ## Blind Robot with Pacman Physics
