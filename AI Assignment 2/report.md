@@ -13,11 +13,9 @@
 * [Introduction](#introduction)
 * [Code Design](#code-design)
 * [Building the Model](#building-the-model)
-* [Breadth First Search](#breadth-first-search)
-* [Memoizing Depth First Search Discussion](#memoizing-depth-first-search-discussion)
-* [Path-Checking Depth First Search](#path-checking-depth-first-search)
-* [Iterative Deepening Search](#iterative-deepening-search)
-* [Lossy Chicken & Foxes Discussion](#lossy-chicken-&-foxes-discussion)
+* [A-star Search](#a-star-search)
+* [Multi-robot Cooperation](#multi-robot-cooperation)
+* [Blind Robot with Pacman Physics](#blind-robot-with-pacman-physics)
 * [Conclusion](#conclusion)
 
 
@@ -65,7 +63,7 @@ The search functions takes the problem and create a solution class to store rela
 
 Now let's talk more about the problem model and how it's built in FoxProblem.py. The FoxProblem itself takes a start state and store the start state as well as the goal state (0,0,0). In my implementation, I also include the total number of chicken and total number of foxes (taken from the start state) for easy and readable access to those in the methods listed for the class. A problem model needs to expand from its start state in order to eventually find a reachable solution state, if there is one, to do so, we need a get_successors method that returns valid successors from a state. The get_successors method will generate a set of states that's valid and nontrivial for the search algorithms, with the help of a helper method called is_state_valid, which filters out illegal and trivial states. Note, trivial states are states that are legal, but unecessary and inefficient for any solution to go through them. These include, going back to original state (this saves nodes_visited), having a state where there are far too many of one animal on one side in relation to the other, or having a next state where there are only ever 1 animal going to the second river side, as the second river side is where we want all the animals to end up at. Illegal states are all checked by the method as well, using simple and easy-to-read return false technique as opposed to a long chain of if statements. States with different combinations of chicken and fox are generated based on the original state, and checked by the is_state_valid method before adding on to the set, which was then returned for search algorithm expansion.
 
-## Breadth First Search
+## A-star Search
 
 As many all know, breadth first search is a simple strategy that first expand the root node, and then expand all of the successors of the root node, then their successors. It's a strategy that in general goes through each layer of depth in tree in order and start with expanding the shallowest nodes. This is achieved by using a first-in-first out queue for the "frontier" being searched, the new nodes gets to the back of the queue while the old ones are expanded first. To do so, I used python's dequeue data structure to store the nodes in the frontier, allowing it to optimally return the oldest node. I also use the Python set to store node states that are already explored, this way, the search will not explore the same state more than once, and the search would work properly on a graph. Using a set to do so allows optimal efficiency (O(1) time) when checking if a node has been explored (is in the data structure). On the other hand, using a linked list to keep track of which states have been visited would be a poor choice because it would always take O(n) time to look through the entire linked list.
 
@@ -98,91 +96,12 @@ After checking with the nodes I drew in the intro and checking against print sta
 
 For time complexity, bfs takes O(b^d) time, where b is the branching factor, and d is the depth of the shallowest solution. This is the case because at each depth, each branch is tracked. Memory complexity is similar. The explored set would have O(b^d-1) nodes in the explored set and O(b^d) nodes in the frontier.
 
-## Memoizing Depth First Search Discussion
+## Multi-robot Coordination
 
-The discussion question asks:
-> Does memoizing dfs save significant memory with respect to breadth-first search?  Why or why not?
 
-I think not necessarily, memoizing dfs may end up using up similar amount of memory (if not same or worse), because by memoizing, or keeping track of all states that have been visited in some sort of data structure, and making sure the dfs never visits the same state twice, the space complexity may as well reach to O(b^d), particularly when the dfs may dive deep into many (or all) branches before finding a solution. So no, memoizing dfs does not save significant memory with respect to breadth-first search.
+## Blind Robot with Pacman Physics
 
-## Path-Checking Depth First Search
-
-Unlike bfs, the dfs always expands the deepest node in the current forntier of the search tree before expanding to other branches. Previously we discuss briefly about memoizing dfs, another style of depth-first search keeps track only of states on the path currently being explored, and makes sure that they are not visited again. This ensures that at least the current path does not have any loops. For path-checking dfs, the node that the dfs explored to is always first checked against a running path that's stored by the solution. To do so, we must pass the solution through the parameter of each recursive call of dfs. Also note, since our dfs is being used in our ids as well, we have an initial if statement that checks if it's a normal path checking dfs call. If it is, a searchNode will be initialized and the solution is also initialized as well.
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/dfs.png" height="60%" width="60%">
-</p>
-
-The recursive helper function of the dfs is below. Notice, my implementation follows the textbook by utilizing **cutoff** and **failure**. These are initialized as strings that shows their respective message. 
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/recursive%20dfs.png" height="60%" width="60%">
-</p>
-
-The first base case is where the node is the goal. If it is, the solution path is updated by calling the backchaining and return a nice path from end goal to start node following the linked nodes. The dfs backchain method is shared with bfs. The second base case happens when the depth limit becomes 0. This is for the ids and will return a result of cutoff for ids, which will indicate to the solution that a cutoff situation occurs. The third base case is when nothing worked, not even cutoff or solution, a failure string will be returned which indicate there's no solution. The recurssive case is the main part. After checking if cutoff didn't happen, states will be generated and be checked against the solution path. Note this solution path is not the final path. The final path only happens after being backchained. If the state is new to the path, a new node is added and that node will be recursed. The tentative solution path will store the node as seen. The recursive function will then recurse give back either cutoff or the goal for result. If result is cutoff, we set the boolean cutoff_occured = True. If result isn't failure, then return the result which is solution. When it bubbles up, it will provide the solution.
-
-The discussion question asks:
-> Does path-checking depth-first search save significant memory with respect to breadth-first search? Draw an example of a graph where path-checking dfs takes much more run-time than breadth-first search; include in your report and discuss.
-
-Usually path-checing dfs may save more memory than bfs with O(bm) < O(b^d) for dfs and bfs respectively; however, this is not necessarily the case. Due to graph there may have cycles, and the dfs may be strting on a deep path that's far from the actual solution, while the solution may be on a relatively shallower path. Thus, for a path-checking dfs it may take much more memory and run time than breadth first search. Please refer to the following message:
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/bfs%20example.png" height="60%" width="60%">
-</p>
-
-The bright green means solution. Notice how the bfs search method, which is noted in pink, reaches the solution node at step 6, while path-checking dfs took 11 steps to reach the solution node. This example is, while exagerated, may very well happen in actual examples where bfs may take more time amd memory than path-checking dfs.
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/dfs%20results.png" height="100%" width="100%">
-</p>
-
-As shown in the results, the dfs results in slightly longer solution paths but have visited less nodes than the bfs. For the problem (3,3,1), it visited only 20 nodes before finding a path of length 12. For the problem (5,4,1), it visited 39 nodes before finding a path of length 20. For the problem (5,5,1), it visited 8 nodes before realizing there is no solution path for that there were no more valid unseen states to expand into. As can be shown, dfs results in fewer nodes visited, however, it may not have found the most efficient solution path. (5,4,1) has a shortest path that is length 16.
-
-## Iterative Deepening Search
-
-Our iterative deepening search combines with dfs search strategy and incrementally increase depth to find the best depth limit.
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/ids.png" height="60%" width="60%">
-</p>
-
-When a ids search is initiated, a new node and new solution will be initalized for the problem, as well as a running counter of depth. This depth will increment by 1 with each iteration of dfs check. In the for loop, the solution path is cleared each time for new solution path to be formed. Then the dfs is called, if the result is cutoff, then it will continue to the next depth. If the result isn't cutoff, then either the right solution or the failure solution will be returned.
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/ids%20results.png" height="100%" width="100%">
-</p>
-
-For the results of ids search, we first notice a much higher number of nodes visited. However, this number makes sense because it accumulates all the nodes it's visited from depth 1 to the solution depth. For the problem (3,3,1), it visited 162 nodes before finding a path of length 12. For the problem (5,4,1), it visited 387 nodes before finding a path of length 16. For the problem (5,5,1), it visited 26 nodes before realizing there is no solution path due to the fact that there were no more valid unseen states to expand into. Notice how the length path for problem (5,4,1) is 16. This number is much better than our dfs result's 20. This only makes sense, however, because ids always will return the shallowest solution path, if there is one.
-
-The discussion question asks:
-> On a graph, would it make sense to use path-checking dfs, or would you prefer memoizing dfs in your iterative deepening search?  Consider both time and memory aspects.  (Hint.  If it's not better than bfs, just use bfs.)
-
-I would prefer to use memoizing dfs in my iterative deepening search. The reasoning is, in an iterative deepning search, the cycle constantly starts a new for path_checking, where they must keep searching for different nodes. However, for memoizing dfs, the memory may be stored through the solution which may be reused for each ids, meaning that each cycle, the memoizing dfs may start with a deeper depth immediately and keep searching for states that are not part of its memory, which saves time. Memory wise both will be using similar amount of memory, which is O(bm) for path checking dfs and O(bm + m) for memoizing dfs. m standing for the maximum depth of the search tree.
-
-## Lossy Chicken & Foxes Discussion
-
-The Lossy Chicken & Foxes problem goes like this:
-> Every fox knows the saying that you can't make an omelet without breaking a few eggs.  What if, in the service of their faith, some chickens were willing to be made into lunch?  Let us design a problem where no more than E chickens could be eaten, where E is some constant.  
-
-So, the discussion question asks:
-
-> What would the state for this problem be?  What changes would you have to make to your code to implement a solution?  Give an upper bound on the number of possible states for this problem.  (You need not implement anything here.)
-
-The state for this problem then, will be (c, f, b, e). **e** signaling the number of chicken already eaten. This is the case because by keeping track of the eaten chicken, states would be notified and more (necessary) possible connections between different states would be made. The changes I'll have to make is mostly in the problem modeling is_state_valid method. This method would need to be modified so that the get_successors method would also return states where a number of chicken may be eaten, alongside with the usual states, thus the search functions may keep on going to more possible states. Speifically, we will need to modify the chicken numbers with e whenever they show up in the is_state_valid method, and rework many other boundary checking if statements in it to make sure the method will also say the cases where some determined numbers of chicken may be eaten, are safe. The goal state doesn't need to change, but we must know the E before hand, and we must use that E number to alter the get_successors and is_state_valid code.
-
-Here's an narrow upper bound on the number of possible states for this problem: 
-> if c + E > f: 2f + (c-1)(c-f+1+E)
-> if c + E == f: 2c + (c-1)
-
-Where c stands for number of chicken, f stands for number of foxes, and E stands for how many chicken may be eaten. Also, c + E must not be less than f to start off with. 
-This is the case because the general case's narrow upper bound on the number of possible states for this problem is:
-> if c > f: 2f + (c-1)(c-f+1)
-> if c == f: 2c + (c-1)(1)
-
-The first 2c comes from the maximum chicken number on the first side, on the other side, the foxes on the other side can have any combination. Same thing for when there's no chicken on the first side of the river -> c + c = 2c. In between the maximum number of chicken and 0, there's c-1 possibilities where the chicken number must be matched by the number of foxes on the other side. Thus, 2c + (c-1). However, if c > f, then the 2c will be 2f. Also, the c-1 becomes (c-1)(c-f+1) because now the chicken number is greater than the foxes, and the numbers in between the maximum c and 0 may vary, with each difference in c and f creating an additional possibility for chicken and number to exist on both side of the river. taking this form with E, we realize it's simply adding the E number on to the (c-f+1) and reworking the inequality condition to fit the new E in.
-
-I'm less sure about the narrow upper bound on the number of possible states for this problem when E is concerned, so I'm also going to give a loose upper bound. From what was said about how the total number of state must be c * f * b, the very loose upper bound of possible states will be c * f * b * E. Where E is the number of chicken that may be sacrificed, this may be the case because anywhere from E to 0 chicken may be eaten. These are possible states, not necessarily counting into the legality of the states. 
 
 ## Conclusion
 
-Uninformed search in AI is, while interesting and fulfilling to implement, not the most exciting nor efficient. After all, it's called uninformed search, Which means that the strategies have no additional information about states beyond that provided in the problem definition. These search strategies may be neccessary and powerful in situations where there are limited information, however, I look forward to implement informed strategies and see more efficient results! :rocket:
+
