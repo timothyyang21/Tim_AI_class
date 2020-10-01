@@ -1,13 +1,13 @@
-# PA1 Chicken and Foxes
+# PA2 Mazeworld
 
 - Timothy Yang :blush:
-- September 22, 2020 :fallen_leaf:
+- September 30, 2020 :fallen_leaf:
 - CS76 Artificial Intelligence :robot:
 - Prof. Alberto Quattrini Li :it:
 - TAs: Almas Abdibayev :sparkles:, Hunter Gallant :rocket:, Maxine Perroni-Scharf :unicorn:
 
-![enter image description here](https://hips.hearstapps.com/pop.h-cdn.co/assets/16/50/1600x800/landscape-1481817257-fox-chicken-corn.jpg?resize=980:*)
-> Photo Source: Popular Mechanics
+![enter image description here](https://s3.amazonaws.com/cdn.pura-aventura.com/images/medium/laberinto-HR320180829-76980-5e8gkd.jpg?1535505438)
+> Photo Source: Pura Adventura
 ## Table of contents
 
 * [Introduction](#introduction)
