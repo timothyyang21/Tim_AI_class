@@ -43,17 +43,23 @@ Now, let us move to discuss Code Design! :sparkles:
 
 ## Code Design
 
-The code design is relatively simple. In this assignment, we use 4 python files, the first three each containing its own class, while the fourth one "foxes.py" is the main that runs the program:
-- FoxProblem.py
+The code design is not as straightforward, particularly due to having another problem we also investigate in this assignment - the sensorless problem, which we'll talk more in depth in * [Blind Robot with Pacman Physics](#blind-robot-with-pacman-physics) . In this assignment, we use 7 total python files, inlcuding two testing files that runs the programs, the other six each contains its own class:
+- Maze.py
+- MazeworldProblem.py
 - SearchSolution.py
-- uninformed_search.py
-- foxes.py
+- astar_search.py
+- test_mazeworld.py
 
-In FoxProblem.py, we build the main problem model into its own class and methods. We'll talk more about this in the [Building the Model](#building-the-model) section. What is to note that this is the starting point. In the main "foxes.py", the problem is stated using the class object offered by FoxProblem.py, which stores the relavant information to the problem (the start state, the goal state, etc). Under FoxProblem.py we also have methods such as goal_test and get_successors to help the search algorithm functions in uninformed_search.py. 
+- SensorlessProblem.py
+- test_sensorless.py
 
-In Search Solution.py, we create a solution class object for easy storing of the different solutions and their related properties such as the problem itself, the search strategy (method), the solution path, and a counter of how many nodes were visited through that solution. When returning the solution, it has a toString method which allows it to print out all the relevant information of the solution (or lack thereof) to the problem attempted by the search method. This efficiency and usefulness of this class design will be shown in the dfs and ids search algorithm, as the solution is passed along to each new recursive call so that things like number of nodes visited may be recorded.
+In MazeworldProblem.py, we build the main problem model into its own class and methods. We'll talk more about this and Maze.py in the [Building the Model](#building-the-model) section. What is to note that this, along with Maze.py, is the starting point. In the main "test_mazeworld.py", the problem is stated using the class object offered by Maze.py and MazeworldProblem.py, which stores the relavant information to the problem (the start state, the goal state, etc). Under MazeWorldProblem.py we also have methods such as goal_test and get_successors to help the search algorithm functions in astar_search.py. In Maze.py, we build the basic structure of our maze and use it to create more mazes.
 
-In uninformed_search.py, we write the actual strategy algorithms used and create a Searchnode class object to help with the search strategies. Every searchNode class object stores a state, a list of children, and a parent.
+As in Assignment 1, we have an Search Solution.py, in which we create a solution class object for easy storing of the different solutions and their related properties such as the problem itself, the search strategy (method), the solution path, the path cost, and a counter of how many nodes were visited through that solution. When returning the solution, it has a toString method which allows it to print out all the relevant information of the solution (or lack thereof) to the problem attempted by the search method.
+
+In astar_search.py, we write the actual strategy algorithms used and create a AstarNode class object to help with the search strategies. Every AstarNode class object stores a state, a parent, a heuristic, and the running transition cost.
+
+In SensorlessProblem.py, we build the second problem model that deals with the sensorless robot problem. Similar to MazeworldProblem, it offers a class object and many methods that's used by the main running program test_sensorless.py in order to run the program.
 
 ## Building the Model
 
