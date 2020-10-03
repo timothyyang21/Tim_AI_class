@@ -150,6 +150,33 @@ This is very interesting. The idea of the 8-puzzle's state pace is made of two d
   <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/first%20test%202.png" height="10%" width="10%">
 </p>
 
+The first test is interesting because the robots are in some sort of corridor and in the wrong order, and they have to move around before letting A to go ahead first. The B robot basically set aside (above C), while letting A go ahead. The solution length is 16 because robot C and B waited for the A to pass, resulting in the fuel cost of only 10.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/second%20test%201.png" height="10%" width="10%">
+</p>
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/second%20test%201.5.png" height="10%" width="10%">
+</p>
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/second%20test%202.png" height="10%" width="10%">
+</p>
+
+The second test is interesting in the same way. C must go in first before A or B does. We'd expect something along the lines of A and B first waited before C goes, however, A and C actually went at the same time. A went a little bit more over before realizing it must let C past first, then A went in, before B does.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/third%20test%201.png" height="10%" width="10%">
+</p>
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/third%20test%202.png" height="10%" width="10%">
+</p>
+
+In the third test we saw the same thing, A didn't have to move, so it stayed there most of the time. However, as soon as B closed in, A moved away a bit to let B pass before closing in together.
+
+
 
 ## Sensorless Problem Code Model
 
