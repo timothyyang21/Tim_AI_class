@@ -176,7 +176,29 @@ The second test is interesting in the same way. C must go in first before A or B
 
 In the third test we saw the same thing, A didn't have to move, so it stayed there most of the time. However, as soon as B closed in, A moved away a bit to let B pass before closing in together.
 
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/test%204%201.png" height="10%" width="10%">
+</p>
 
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/test%204.png" height="10%" width="10%">
+</p>
+
+Now test 4 is quite interesting because it has no solution, yet it still went for 7 nodes before realizing there's no way it can possibly get there.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/test%205%201.png" height="10%" width="10%">
+</p>
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/test%205%202.png" height="10%" width="10%">
+</p>
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/test%205%203.png" height="10%" width="10%">
+</p>
+
+And there is test 5, notice how A went out, while B also went out, to first let C in.
 
 ## Sensorless Problem Code Model
 
@@ -229,7 +251,7 @@ The sensorless_heuristic may have a passing "optimal" grade, however, under clos
 Here included is the sensorless results of a 5x5 map as well as the animated path:
 
 <p align="center">
-  <img "src=https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/sensorless.png" height="60%" width="60%">
+  <img "https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/sensorless.png" height="60%" width="60%">
 </p>
 
 One can see the actions that the algorithm takes regarding how to get to those possible locations: the "Start", "South", "West", "West" corresponds to an action sequence that my algorithm might take to initially tackle this maze. The animated complete path shows us how the robot belief state changes as the path is executed. Different heuristic does this differently, of course, and the program model is highly adaptable. Animate the complete path, showing how the
