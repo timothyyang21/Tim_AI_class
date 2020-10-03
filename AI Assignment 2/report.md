@@ -78,7 +78,33 @@ The goal_test function checks if the current state has robots inside all of the 
 
 ## A-star Search
 
+A-star search is a form of best first search whose evaluation function is this: f(n) = g(n) + h(n), where g(n) is the cost to reach the node, and h(n) is the cost to get from the node to the goal. Since g(n) gives the path cost from the start node to node n, and h(n) is the estimated cost of the cheapest path from n to the goal, we have that f(n) is the estimated cost of the cheapest solution through n. Thus, if we are trying to find the cheapest solutiion, a reasonable thing to try first is the node with the lowest value g(n) + h(n). Indeed, A-star search is a very reasonable search; under right conditions of heuristic function, A-star search is both complete and optimal.
 
+The A-star algorithm is identical to Uniform Cost Search except that A-star search uses g + h instead of just g. Here's my implementation:
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/astar%20constructor.png" height="60%" width="60%">
+</p>
+
+The constructor of AstarNode takes a state, a heuristic, a parent, a transition cost (which is updated with heuristic cost), as well as fuel cost for the multi-robot problem.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/astar%20code.png" height="80%" width="80%">
+</p>
+
+First thing to note is that I included the multi-robot coordination problem model in here as well. The fuel_cost and fuel_cost_update helper function is for multi-robot coordination to better understand the fuel_cost they used and their optimality. Alright, starting from the top. First, the function itself takes in the problem and the heuristic function used. A priority queue and a start node is created annd the start node is pushed into the prioity queue. A solution is created in order to store relavant information. A dictionary of explored set (visited_cost) is created, which will mark nodes against its cost. In the loop, a node is continuously being popped unless there's none to pop, in which case the loop will end and the solution will be returned as failure - no solution found. First, the node is checked by the goal test to see if the current node is indeed the solution node, in which case the search ends, solution information updated, and the successful solution is returned. If that's not the case, the node is added to the explored dictionary, adding to it its associated cost. Then, successors of the state is produced using the helper get_successors function. A child node is created to store the state along with new cost. Then, the child is added to the priority queue if it's not in the explored set nor in the prioity queue itself, or else if the state is already in queue, it's compared against the previous ones to see which one has a lower cost, if the new one has lower cost, it will then replace the higher cost one (old one). In this way, the priority queue will always first explore the nodes with lower cost, resulting in the optimality that was mentioned before.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/astar%20results.png" height="60%" width="60%">
+</p>
+
+This is a simple result of using the astar search, along with the heuristic of manhattan distance. The cost is reflected in the results, since manhattan distance calculates the difference in distance from current state and goal state.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/astar%20results%202.png" height="60%" width="60%">
+</p>
+
+Here icluded is a comparison between null heuristic and manhattan distance heuristic's Astar results. Notice how although they find a solution of equal length, the null heuristic one went through considerbly more nodes.
 
 ## Multi-robot Coordination
 
@@ -116,6 +142,13 @@ This is very interesting. The idea of the 8-puzzle's state pace is made of two d
 
 > Implement a model of the system and use A* search to find some paths. Test your program on mazes with between one and three robots, of sizes varying from 5x5 to 40x40. (You might want to randomly generate the 40x40 mazes.) I'll leave it up to you to devise some cool examples -- but give me at least five and describe why they are interesting. (For example, what if the robots were in some sort of corridor, in the "wrong" order, and had to do something tricky to reverse their order?)
 
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/first%20test%201.png" height="10%" width="10%">
+</p>
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/first%20test%202.png" height="10%" width="10%">
+</p>
 
 
 ## Sensorless Problem Code Model
