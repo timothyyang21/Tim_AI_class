@@ -181,7 +181,7 @@ In the third test we saw the same thing, A didn't have to move, so it stayed the
 </p>
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/test%204.png" height="10%" width="10%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/test%204.png" height="30%" width="30%">
 </p>
 
 Now test 4 is quite interesting because it has no solution, yet it still went for 7 nodes before realizing there's no way it can possibly get there.
