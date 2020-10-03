@@ -26,7 +26,7 @@ In Mazeworld Wonderland, you find yourself in a 2D maze, along with 2 other frie
 Indeed, in this assignment, we're interested in solving this problem using informed search strategies through a computer program (Aritificial Intelligence). Similar to assignment 1, we'd need to provide **states** in which the AI may use to find the solution to the problem. Same as last time, the solution will be a connected sequence of states from the initial state to the goal state; each pair of states is linked by an action. What's different, however, is that this time around, the AI may take into account the goal locations, since they are informed and know something about the goal node's location using heuristics. This will be discussed more in detail by the end of the introduction.
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/intro%20example.png" height="20%" width="20%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/intro%20example.png" height="10%" width="10%">
 </p>
 
 Here's a more detailed example of the maze we are going to be working with. The periods represent open floor tiles (places that can be walked on or over), and the number signs represents walls, places in the maze where a simple robot cannot go. At least one robot will be present in a maze. It may move in any of the four directions: North (towards the top of the screen), East, South, and West. There are coordinates on the maze. (0, 0) is the bottom left corner of the maze. (6, 0) is the bottom right corner of the maze. In this particular example, perhaps we'd like to plan a path for the robot to go through the maze from the bottom right corner to the top left corner, without going through any walls. As one can already see, the program could be informed to know some information about how far away the goal location is from the starting location.
@@ -78,36 +78,7 @@ The goal_test function checks if the current state has robots inside all of the 
 
 ## A-star Search
 
-As many all know, breadth first search is a simple strategy that first expand the root node, and then expand all of the successors of the root node, then their successors. It's a strategy that in general goes through each layer of depth in tree in order and start with expanding the shallowest nodes. This is achieved by using a first-in-first out queue for the "frontier" being searched, the new nodes gets to the back of the queue while the old ones are expanded first. To do so, I used python's dequeue data structure to store the nodes in the frontier, allowing it to optimally return the oldest node. I also use the Python set to store node states that are already explored, this way, the search will not explore the same state more than once, and the search would work properly on a graph. Using a set to do so allows optimal efficiency (O(1) time) when checking if a node has been explored (is in the data structure). On the other hand, using a linked list to keep track of which states have been visited would be a poor choice because it would always take O(n) time to look through the entire linked list.
 
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/bfs.png" height="10%" width="10%">
-</p>
-
-At the start of bfs, the root node is added into the **frontier** queue unless the root node (provided by the search problem) happens to be the goal. The while loop make sure every node in queue is explored. The **explored** set stores the state that has been explored so that no nodes with repeating states will be added into the frontier queue. Then the expansion of the node begins based on the state using the get_successors method, which returns valid successor states that the node is linked to. To make sure they are linked, a child search node is created with that node and corresponding state. The check checks whether the child state is new and unexplored in both the explored set (which includes the ones that has been explored), and the frontier queue, which stores the ones that are just about to be expanded. If the child node past both tests but is not the goal, it will be added to the frontier node. On the other hand, if the node turn out to be the goal, then the **backchaining** helper method is utilized to return the correct solution path. The solution gets updated and returned to print out the test results. If at the end of the queue there were no more valid unexplored nodes to be explored, the program will return the solution at the end without a solution path. This will prompt the SearchSolution to print out "no solution found after visiting ... nodes" which indicates there's no solution. The number of visited nodes are still available due to the SearchSolution class.
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/backchaining.png" height="60%" width="60%">
-</p>
-
-The backchaining method simply extracts the path from the graph after the search has found the goal node. Because we stored a link to a parent node in each child node, by simply using a while loop and set 
-> node = node.parent
-
-each time, we go through all of the nodes in the solution path. This is possible because bfs enables us to know that all the shallower goal nodes must have been generated already and failed the goal test. Note, I use reverse() at the end to save some time, instead of appending new node to the front which takes O(n) times, even though this won't really make a difference in this scenario due to the solution path being relatively short.
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/bfs%20results.png" height="100%" width="100%">
-</p>
-
-As shown in the results, the bfs results in short solution paths but have visited relatively more nodes (this comparison will become clearer when looking at the dfs results). For the problem (3,3,1), it visited 44 nodes before finding a path of length 12. For the problem (5,4,1), it visited 98 nodes before finding a path of length 16. For the problem (5,5,1), it visited 9 nodes before realizing there is no solution path for that there were no more valid unexplored states to expand into. More comparison will be made in [Path-Checking Depth First Search](#path-checking-depth-first-search). 
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%201/bfs%20analysis.png" height="20%" width="20%">
-</p>
-
-After checking with the nodes I drew in the intro and checking against print statements, this results makes sense, as the end solution turns does follow the sequence. As shown in the following print statements: the start node come in from the queue, three successor states are expanded and added into the queue, next comes (3,2,0), whose successor states are none due to my nontrivial states check, however, new successor states like (3,2,1) and (2,2,0) are added as child into the frontier (the only ones doing so as they are the only new ones).
-
-For time complexity, bfs takes O(b^d) time, where b is the branching factor, and d is the depth of the shallowest solution. This is the case because at each depth, each branch is tracked. Memory complexity is similar. The explored set would have O(b^d-1) nodes in the explored set and O(b^d) nodes in the frontier.
 
 ## Multi-robot Coordination
 
@@ -145,13 +116,63 @@ This is very interesting. The idea of the 8-puzzle's state pace is made of two d
 
 > Implement a model of the system and use A* search to find some paths. Test your program on mazes with between one and three robots, of sizes varying from 5x5 to 40x40. (You might want to randomly generate the 40x40 mazes.) I'll leave it up to you to devise some cool examples -- but give me at least five and describe why they are interesting. (For example, what if the robots were in some sort of corridor, in the "wrong" order, and had to do something tricky to reverse their order?)
 
+
+
 ## Sensorless Problem Code Model
+
+> Assume that you now only have a single robot in mazeworld, but there's a catch. The robot is blind, and doesn't know where it starts! The robot does know the map of the maze. The robot has a sensor that can tell it what direction is North (so that it can still move in intended directions). However, the robot has no other sensors.  No, it really can't tell when it hits a wall.
+
+Now this is quite the problem. How would a robot be able to find its way out if it doesn't even know where it starts, or when it hits a wall? Luckily, there is a way. We can write a planning algorithm that gives a plan that even the blind robot can follow, knowing that the robot will **eventually** know where it is by trying out different actions. For example, if execting the action "west" from a configuration where "west" is blocked, the robot simply doesn't move.
+
+Let the 'state' in the search be the current set of possible locations of the robot. For example, in a 4x3 maze, the first state in the search will be the set of all 12 possible starting locations: { (0, 0), (1, 0), (2, 0), ... (3,2) }. The actions will be {north, south, east, west}. The goal test function tests if the state is a singleton, with just one element in the set. If there is just one element, then the robot knows where it is. After all, it does know the shape of the maze. Here's my implementation:
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/sensorless%20constructor.png" height="60%" width="60%">
+</p>
+
+The constructor consists of a sensorless_maze object, a start state which is built by the help of the helper function, and number of robots, which is set to 1 for this blind robot problem. The state of the sensorlessProblem is a list that consists of all the possible coordinates of the robots. The first item in the state is a String, in order to mark the direction it is taking in order to cut down different states. This will be clearer after looking at the get_successor function:
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/sensorless%20code.png" height="60%" width="60%">
+</p>
+
+The goal test checks whether the state is a singleton. The get_successors method returns a list of possible successors based on its current possible states. It takes the current possible state, first create a set of coordinates for easy checking if it's in original state in a later crucial manipulation. Then each direction is being considered. If it's north, then the new coordinate set (y + 1, going north), is judged by whether the new location is a floor and is included in the original set, only if those two passed will the new coordinate set be added to a new list (where only that particular direction is different), and added to a set of successors which will then be returned by the function, after being converted to a tuple. Note, the state again, is: all the possible states of possible coordinate locations. So it only makes sense that it's returning a tuple set (possible sets) of tuple lists (coordinates).
+
+The get_successors method is used in astar_search, which allows the function to eventually dwindle down the possible states and return a path from start to end of which direction it takes to dwindle down the possible states to only 1 state, which is the goal node.
 
 ## Blind Robot with Pacman Physics
 
 > Describe what heuristic you used for the A* search. Is the heuristic optimistic? Are there other heuristics you might use? (An excellent answer might compare a few different heuristics for effectiveness and make an argument about optimality.)
 
+After trying to be ambitious and tried to develop the **perfect** heuristic and failing, I cameback and be humbly submit 3 heuristics that I used. First, I use the null heuristic. And the results is as followed on a 20x20 maze:
 
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/null_heuristic.png" height="60%" width="60%">
+</p>
+
+Then, I used the heuristic that favors the one with the lower number of possible states. The result is as followed. One can see that this heuristic, although checked a lot more nodes than null heuristic, ended up finding a shorter path to check all the possible states (starting locations), at least on a bigger maze like 20x20.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/sensorless_heuristic.png" height="60%" width="60%">
+</p>
+
+Then, I used the heuristic that favors the one with the higher number of possible states. The result is as followed. One can see that this heuristic, although ended up finding a longer path to check all the possible states (starting locations), ended up checking fewer nodes. This is due to the fact that it always opt to expand the option with the most amount of possible states first, resulting the get_successors function to do more work for the search algorithm, and in the process cut down more nodes. However, the longer path is created because, again, it **always** go along and expand the one with the more possible states first, resulting that at the late-game (new term from gaming that suggests the later phase of a process), the algorithm will still always expand the one with more possible states first, resulting in longer solution lenght. Quite interesting, isn't it?
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/sensorless_heuristic_opposite.png" height="60%" width="60%">
+</p>
+
+Aside from the null heuristic, the one that favors expanding the ones with fewer number of possible states, or sensorless_heuristic, is optimistc in that it never overestimate the cost of reaching the goal. This makes sense because it always choose the ones with fewer ones first, resulting in lower and lower cost. However, the one that favors expanding the ones with higher number of possible states ended up finding a longer solution, or sensorless_heuristic_opposite, almost always overestimate the cost of reaching the goal. In terms of optimality, I'd say none of these are truly optimal, especially in bigger mazes. To be optimal, the algorithm must find the shortest solution path. In bigger mazes, the shortest solution path will have to be coming from a heuristic that favors the ones with the possible states that can be cut down the most from. This heuristic, which I tried in vain to do earlier, has to take into account of how many repeating x or y coordinate there is in average, assign the ones with the most a lower value (especially when there are many possible coordinates), and assign higher value to the onest with the most when there are only few possible coordinates left. This optimal heuristic has to be dynamic and work with the get_successors function well.
+
+The sensorless_heuristic may have a passing "optimal" grade, however, under closer exaimination, we know that always choosing to favor expanding the states with fewer possible coordinations isn't always the best idea, sometimes, it's best to expand the states with more possible coordinations in the hope that doing so, one will be able to cut the possible coordinations down significantly (according to the process mentioned earlier).
+
+Here included is the sensorless results of a 5x5 map as well as the animated path:
+
+<p align="center">
+  <img "src=https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%202/sensorless.png" height="60%" width="60%">
+</p>
+
+One can see the actions that the algorithm takes regarding how to get to those possible locations: the "Start", "South", "West", "West" corresponds to an action sequence that my algorithm might take to initially tackle this maze. The animated complete path shows us how the robot belief state changes as the path is executed. Different heuristic does this differently, of course, and the program model is highly adaptable. Animate the complete path, showing how the
 
 ## Conclusion
 
