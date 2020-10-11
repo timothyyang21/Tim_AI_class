@@ -45,19 +45,71 @@ Due to time constraints, please take a look at the code itself to further get a 
 
 ## Evaluation
 
-Here I give a little example of all three as I run my code
+Here I give a little example of all three as I run my code. First, we have minimax using Evaluation function (Plain Utility also works):
+
+After black randomly moves a knight forward, white sees an opportunity to attack (and kill it to score better evaluation), so it moves its pawn to try to eat it. Immediately seeing an openning, black moves its queen to check the opponents' king, knowing that the king's the end goal (it's worth so much points, after all). 
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Minimax%20Run%20Example%201.png" height="60%" width="60%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Minimax%20Run%20Example%201.png" height="20%" width="20%">
 </p>
+
+Then, we see White immediately move its knight to block the queen's path to protect the king. Notice how the calls volume is a lot smaller, this is because there's only so many legal moves left to save the king. The total calls volume is only 7 greater then the max_depth calls volume in this scenario because the depth is 2, the calls at the max_depth is 5216 because there are many combinations of moves after any of those 7 initial moves.
 
 <p align="center">
   <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Minimax%20Run%20Example%202.png" height="20%" width="20%">
 </p>
 
+Secondly, we have alpha beta. I have alpha beta as AI players playing against each other at depth 2. It's significantly faster and they explore less moves, even in the mid-game:
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Alphabeta%20Run%20Example%201.png" height="20%" width="20%">
+</p>
+
+Both sides are keeping each other in check, not allowing anyside to change the value balance that much. On another game, the value's still very much similar.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Alphabeta%20Run%20Example%203.png" height="20%" width="20%">
+</p>
+
+However, one side made an accident and lead the point values to be a bit different. Also, notice the intelligent gameplay still, the bishop came over and exchanged with the equal-valued knight, after doing so, the rook immediately took over the bishop.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Alphabeta%20Run%20Example%204.png" height="20%" width="20%">
+</p>
+
+From the significant faster moves and fewer calls (than Minimax) at the same depth -- while keeping equal values and keeping the intelligent gameplay, it's clear that the Alphabeta algorithm works.
+
+And lastly, we have iterative deepening alpha beta. In iterative deepening alpha beta search, I find that some moves are made actually based on an earlier depth, instead of a deeper one. This shows that while most of the time a better move may come from the deepest depth it can go (after all - more information is better), sometimes the better move comes from a shallower depth.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/iterative%20deepning%20search.png" height="20%" width="20%">
+</p>
 
 ## Responses to Discussion Questions
 
+For Minimax and Cutoff Test's discussion, I found that at depth 2 the algorithm's fairly fast, computing a step calls around 15,000 to 20,000 calls in early games (cutting it down to one third of that in check scenarios), and that call volume takes about 2 seconds or less. However, at depth 3, in the early games it computes around 200,000 to 300,000 calls, with each step taking about 30-40 seconds. The calls volume at max depth in both cases significantly overpowers the calls at other depths. At depth 1, the algorithm's basically flying, computing only aobut 500-1000 calls for each step. The call and time difference among the different depths makes sense, because with each new depth, the algorithm search ony layer deeper, and that layer is all the possibilities of different end-state that can be achieved by the different moves. The factor is about 10-20, indicating that at each game turn, a player has about that many possibilities for different moves. And this is only in the beginning state, the middle game will have a greater factor. (Early games and end games moves are limited due to the game construct.)
+
+For evalution function's discussion, we have already seen in the Evaluation part of the report that the AI will cleverly attack and block moves, choosing to give the most important piece (king) a check and the defending side blocking the threat from the queen. It is not as easy to beat as RandomAI or Minimax with only utility function anymore, it's more clever and act just like a beginner/intermediate human player.
+
+As for Alphabeta's discussion, I wasn't able to use a specific initial scenario due to lack of time. However, I checked many different examples of the AI's game play (and playing against them) to find that they all conduct the intelligent move and lead to same values of scores every time. (For example, they won't just not leave a knight untaken if they have the power of taking them -- maybe they will wait for a turn to just give the other side a check first, but eventually they will for sure take the knight.) To include a same "initial" state to show that I've checked many times, I have this initial position to show:
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Minimax%20same%20position%2C%20same%20value.png" height="20%" width="20%">
+</p>
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/AlphaBeta%20same%20position%2C%20same%20value.png" height="20%" width="20%">
+</p>
+
+The discussion asks us to make sure that we show at least some evidence to show that Minimax and Alphabeta have the same value for specific positions (to show Alphabeta is doing the right thing), thus, I made sure that both are intelligent and Alphbeta will always return an action of similar value by making sure of it first, and then showing an example.
+
+Another discussion point for alpha beta, we see that instead of taking 20-30 seconds for eachs step for depth 3 (like Minimax), Alphabeta AI searched a step at depth 3 under 4-5 seconds, with similarly intelligent moves. This makes complete sense because Alphabeta AI can reduce the time complexity from O(b^m) up to O(b^m/2), if the order of searching is optimal. This means that a call can be (at best scenario), square-rooted. 20 seconds can become 4-5 seconds for sure. The total calls also go from 200,000-300,000 to 20,000 to 40,000 in the early games.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Alphabeta%20faster.png" height="20%" width="20%">
+</p>
+
+As for iterative deepening search, I tested many tests and verify that indeed, the best move changes and sometimes improved as deeper levels are searched.
 
 ## Conclusion
 
