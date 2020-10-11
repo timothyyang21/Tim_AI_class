@@ -6,7 +6,7 @@
 - Prof. Alberto Quattrini Li :it:
 - TAs: Almas Abdibayev :sparkles:, Hunter Gallant :rocket:, Maxine Perroni-Scharf :unicorn:
 
-![enter image description here](https://pixabay.com/illustrations/sketch-chess-drawing-4029522/)
+![enter image description here](https://cdn.pixabay.com/photo/2019/03/02/09/46/sketch-4029522_1280.jpg)
 > Photo Source: Pixabay
 ## Table of contents
 
