@@ -48,41 +48,37 @@ Here I give a little example of all three as I run my code. First, we have all t
   <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%204/Map%20Coloring%20CSP%20Results%201.png" height="100%" width="100%">
 </p>
 
+First, we have the simple test with Australia's 7 regions and 3 colors with no additional help from heuristics and inferences. Our results is a humble 8 backtracking calls and 12 color values that it checked (8,12) . With only 2 colors, it checked more values but less calls before it determines there's no solution (7, 14). Inference doesn't seem to add any efficiency, as does the MRV heuristics. However, this makes sense because in the textbook it mentioned that in map_coloring problems they don't really have an impact. For the degree heuristic test, it may seem that it actually checked more (15) values and is therefore less efficient, we'll see this is not generally the case as the problem gets large, as shown later in the Europe map example. The LCV heurisitc gets us the most efficient result with 8 calls and 11 values that were checked. Clearly the least constraining value heuristic help us order the domain values better thus we checked a few numbers (1) less of the values. 
+
 <p align="center">
   <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%204/Map%20Coloring%20CSP%20Results%202.png" height="100%" width="100%">
 </p>
 
-Then, we see White immediately move its knight to block the queen's path to protect the king. Notice how the calls volume is a lot smaller, this is because there's only so many legal moves left to save the king. The total calls volume is only 7 greater then the max_depth calls volume in this scenario because the depth is 2, the calls at the max_depth is 5216 because there are many combinations of moves after any of those 7 initial moves.
+The next few results share the same phenomenon, with the LCV heuristic helping us reducing the values that we checked. When Degree and LCV heuristic work together, however, it worked magic. It only checked 9 values before solving the problem. The Degree heuristic helps assign the unassigned variable better by choosing the variable with most connected degrees to be assigned first, in combination with LCV it helps reduce the values to be checked greatly. Interestingly, in test 10 we see the Inference actually dragging the results down by 2 values. Next, we have the major European countries coloring map csp. The base solution gives us 48 calls and 112 values checked. The failed solution checked 16252 calls and 48757 values before it gave up.
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Minimax%20Run%20Example%202.png" height="20%" width="20%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%204/Map%20Coloring%20CSP%20Results%203.png" height="100%" width="100%">
 </p>
 
-Secondly, we have alpha beta. I have alpha beta as AI players playing against each other at depth 2. It's significantly faster and they explore less moves, even in the mid-game:
+With everything turned on, (choosing Degree instead of MRV), we reduced the calls to 41 calls and checked only 57 values. With only MRV and LCV, we have (48, 88). For only MRV, we have (48, 112), so clearly this didn't help. With only Degree, we have (41, 89), which is a much better improvement for both calls and values. In fact, the Degree heuristic allows the calls to be checked at only 41 calls. Our winning combination of Degree and LCV yields us the 41 calls and 57 values, clearly the LCV handled the values well while the Degree drive us home both the values and calls.
+
+Then, we have the circuit board layout constraint satisfaction problem's results:
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Alphabeta%20Run%20Example%201.png" height="20%" width="20%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%204/Circuit%20Board%20CSP%20Results.png" height="100%" width="100%">
 </p>
 
-Both sides are keeping each other in check, not allowing anyside to change the value balance that much. On another game, the value's still very much similar.
+In the first test, the default problem (3 x 10) is solved with only 5 calls and 23 value checks. In the failed test (adding 1 more component to it), we can see the program called 105 backtracking calls before giving up, and 1216 values were checked. For a bigger problem (5 x 12), the problem is solved in 7 calls and 97 values were checked. The next test is the longest yet, it took about 8 seconds before solving the problem with 8983 backtracking calls and 552417 values checked. This is due in large part of the h component being so late in the checking board and such a hard part to fit. 
+
+Then, there's the very similar csp Word Search:
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Alphabeta%20Run%20Example%203.png" height="20%" width="20%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%204/Word%20Search%20CSP%20Results.png" height="100%" width="100%">
 </p>
 
-However, one side made an accident and lead the point values to be a bit different. Also, notice the intelligent gameplay still, the bishop came over and exchanged with the equal-valued knight, after doing so, the rook immediately took over the bishop.
+In the first test with 9 fruits in a board of 10 x 10, the problem called 10 backtracking calls and checked 101 values before returning a board in which all the words are scrambled and fit in. In the second test with 19 countries (now to think of it I could easily squeeze in UK to make it 20), we have 20 calls and 1453 value checked before finding the result. 
 
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Alphabeta%20Run%20Example%204.png" height="20%" width="20%">
-</p>
-
-From the significant faster moves and fewer calls (than Minimax) at the same depth -- while keeping equal values and keeping the intelligent gameplay, it's clear that the Alphabeta algorithm works.
-
-And lastly, we have iterative deepening alpha beta. In iterative deepening alpha beta search, I find that some moves are made actually based on an earlier depth, instead of a deeper one. This shows that while most of the time a better move may come from the deepest depth it can go (after all - more information is better), sometimes the better move comes from a shallower depth.
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/iterative%20deepning%20search.png" height="20%" width="20%">
-</p>
+I have further verified my code by breaking my code down, adding print statements, and checking the sequences individually. I will end my discussion of evaluation now and start with the responses to discussion questions. Thank you!
 
 ## Responses to Discussion Questions
 
@@ -106,4 +102,4 @@ Because my implementation never converts constraints or other things to integer 
 
 ## Conclusion
 
-Constraint Satisfaction Problems were actually quite fun! The general-solving algorithms is indeed quite interesting. I look forward to the next AI adventuer! :sparkles:
+Constraint Satisfaction Problems were actually quite fun! The general-solving algorithms is indeed quite intriguing -- there are so many different kinds of intresting problems to solve, after all! I look forward to the next AI adventuer! :sparkles:
