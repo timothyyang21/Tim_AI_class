@@ -1,13 +1,13 @@
 # PA4 Constraint Satisfaction Problems
 
 - Timothy Yang :blush:
-- October 10, 2020 :fallen_leaf:
+- October 18, 2020 :fallen_leaf:
 - CS76 Artificial Intelligence :robot:
 - Prof. Alberto Quattrini Li :it:
 - TAs: Almas Abdibayev :sparkles:, Hunter Gallant :rocket:, Maxine Perroni-Scharf :unicorn:
 
-![enter image description here](https://cdn.pixabay.com/photo/2019/03/02/09/46/sketch-4029522_1280.jpg)
-> Photo Source: Pixabay
+![enter image description here](https://images.slideplayer.com/19/5806117/slides/slide_2.jpg)
+> Photo Source: Slideplayer.com
 ## Table of contents
 
 * [Introduction](#introduction)
