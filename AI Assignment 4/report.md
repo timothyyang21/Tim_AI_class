@@ -1,7 +1,7 @@
 # PA4 Constraint Satisfaction Problems
 
 - Timothy Yang :blush:
-- October 18, 2020 :fallen_leaf:
+- October 18, 2020 (20F) :fallen_leaf:
 - CS76 Artificial Intelligence :robot:
 - Prof. Alberto Quattrini Li :it:
 - TAs: Almas Abdibayev :sparkles:, Hunter Gallant :rocket:, Maxine Perroni-Scharf :unicorn:
@@ -18,7 +18,7 @@
 
 ## Introduction
 
-Chess! What a brilliant game that has inspire and entertain people throughout history. I'd love to give a more fun introduction to the Adversial-Search AI assignment I worked on, but looking at I'm running out of time, I'd just go straight to the point and make this report short and sweet. To that end, I'm only going to talk about three key things. 1st, the implementation and design choices I made for Minimax & Cutoff, Evaluation Function, Alpha-Beta Pruning, and Iterative Deepening. 2nd, I'm going to give a brief (but thorough) walk through of my evaluation over my algorithm, giving results to show that everything work as planned. 3rd, I'm going to respond to some discussion questions posted in the task portion of the assignment.
+Map coloring is a constraint satisfaction problem, an interesting one at it. So is circuit board laying, word-search, 8-queens, etc. As with PA3, I'd love to give a more fun and exciting introduction to the CSP AI assignment I worked on, but looking at how I'm running out of time, I'd just go straight to the point and make this report short and sweet. To that end, I'm only going to talk about three key things. First, the implementation and design choices I made for CSP, Map_Coloring, Circuit_Board (and an extra credit Word_Search) CSP problems, as well as the inference and heuristics implementations. 2nd, I'm going to give a brief (but thorough) walk-through of my evaluation over my algorithm, giving results to show that everything work as planned. 3rd, I'm going to respond to some discussion questions posted in the task portion of the assignment.
 
 ## Implementation & Design Choices
 
@@ -87,30 +87,8 @@ And lastly, we have iterative deepening alpha beta. In iterative deepening alpha
 
 ## Responses to Discussion Questions
 
-For Minimax and Cutoff Test's discussion, I found that at depth 2 the algorithm's fairly fast, computing a step calls around 15,000 to 20,000 calls in early games (cutting it down to one third of that in check scenarios), and that call volume takes about 2 seconds or less. However, at depth 3, in the early games it computes around 200,000 to 300,000 calls, with each step taking about 30-40 seconds. The calls volume at max depth in both cases significantly overpowers the calls at other depths. At depth 1, the algorithm's basically flying, computing only aobut 500-1000 calls for each step. The call and time difference among the different depths makes sense, because with each new depth, the algorithm search ony layer deeper, and that layer is all the possibilities of different end-state that can be achieved by the different moves. The factor is about 10-20, indicating that at each game turn, a player has about that many possibilities for different moves. And this is only in the beginning state, the middle game will have a greater factor. (Early games and end games moves are limited due to the game construct.)
-
-For evalution function's discussion, we have already seen in the Evaluation part of the report that the AI will cleverly attack and block moves, choosing to give the most important piece (king) a check and the defending side blocking the threat from the queen. It is not as easy to beat as RandomAI or Minimax with only utility function anymore, it's more clever and act just like a beginner/intermediate human player.
-
-As for Alphabeta's discussion, I wasn't able to use a specific initial scenario due to lack of time. However, I checked many different examples of the AI's game play (and playing against them) to find that they all conduct the intelligent move and lead to same values of scores every time. (For example, they won't just not leave a knight untaken if they have the power of taking them -- maybe they will wait for a turn to just give the other side a check first, but eventually they will for sure take the knight.) To include a same "initial" state to show that I've checked many times, I have this initial position to show:
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Minimax%20same%20position%2C%20same%20value.png" height="20%" width="20%">
-</p>
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/AlphaBeta%20same%20position%2C%20same%20value.png" height="20%" width="20%">
-</p>
-
-The discussion asks us to make sure that we show at least some evidence to show that Minimax and Alphabeta have the same value for specific positions (to show Alphabeta is doing the right thing), thus, I made sure that both are intelligent and Alphbeta will always return an action of similar value by making sure of it first, and then showing an example.
-
-Another discussion point for alpha beta, we see that instead of taking 20-30 seconds for eachs step for depth 3 (like Minimax), Alphabeta AI searched a step at depth 3 under 4-5 seconds, with similarly intelligent moves. This makes complete sense because Alphabeta AI can reduce the time complexity from O(b^m) up to O(b^m/2), if the order of searching is optimal. This means that a call can be (at best scenario), square-rooted. 20 seconds can become 4-5 seconds for sure. The total calls also go from 200,000-300,000 to 20,000 to 40,000 in the early games.
-
-<p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%203/Alphabeta%20faster.png" height="20%" width="20%">
-</p>
-
-As for iterative deepening search, I tested many tests and verify that indeed, the best move changes and sometimes improved as deeper levels are searched.
+The only discussion questions listed in ...
 
 ## Conclusion
 
-Adversial Search was so fun! It's quite refreshing and inspiring to build entities that compete for themselves. I look forward to the next AI adventuer! :sparkles:
+Constraint Satisfaction Problems were actually quite fun! The general-solving algorithms is indeed quite interesting. I look forward to the next AI adventuer! :sparkles:
