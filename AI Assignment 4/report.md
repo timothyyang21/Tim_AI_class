@@ -45,11 +45,11 @@ Due to time constraints, please take a look at the code itself to further get a 
 Here I give a little example of all three as I run my code. First, we have all the results of the Map_Coloring_CSP:
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%204/Map%20Coloring%20CSP%20Results%201.png" height="60%" width="60%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%204/Map%20Coloring%20CSP%20Results%201.png" height="80%" width="80%">
 </p>
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%204/Map%20Coloring%20CSP%20Results%202.png" height="60%" width="60%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%204/Map%20Coloring%20CSP%20Results%202.png" height="80%" width="80%">
 </p>
 
 Then, we see White immediately move its knight to block the queen's path to protect the king. Notice how the calls volume is a lot smaller, this is because there's only so many legal moves left to save the king. The total calls volume is only 7 greater then the max_depth calls volume in this scenario because the depth is 2, the calls at the max_depth is 5216 because there are many combinations of moves after any of those 7 initial moves.
