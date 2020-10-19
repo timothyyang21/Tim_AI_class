@@ -4,7 +4,7 @@
 - October 18, 2020 (20F) :fallen_leaf:
 - CS76 Artificial Intelligence :robot:
 - Prof. Alberto Quattrini Li :it:
-- TAs: Almas Hunter Gallant :rocket:, Maxine Perroni-Scharf :unicorn:, Abdibayev :sparkles:
+- TAs: Almas Abdibayev :sparkles:, Hunter Gallant :rocket:, Maxine Perroni-Scharf :unicorn:  
 
 ![enter image description here](https://images.slideplayer.com/19/5806117/slides/slide_2.jpg)
 > Photo Source: Slideplayer.com
