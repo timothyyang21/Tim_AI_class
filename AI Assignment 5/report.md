@@ -19,7 +19,7 @@
 
 ## Introduction
 
-Map coloring is a constraint satisfaction problem, an interesting one at it. So is circuit board laying, word-search, 8-queens, etc. As with PA3, I'd love to give a more fun and exciting introduction to the CSP AI assignment I worked on, but looking at how I'm running out of time, I'd just go straight to the point and make this report short and sweet. To that end, I'm only going to talk about three key things. First, the implementation and design choices I made for CSP, Map_Coloring, Circuit_Board (and an extra credit Word_Search) CSP problems, as well as the inference and heuristics implementations. 2nd, I'm going to give a brief (but thorough) walk-through of my evaluation over my algorithm, giving results to show that everything work as planned. 3rd, I'm going to respond to some discussion questions posted in the task portion of the assignment.
+The sudoku assignment is a constraint satisfication problem solved with prepositional logic. In this report, I'm going to talk about three key things. First, the implementation and design choices I made for implementing the GSAT and walkSAT algorithms. 2nd, I'm going to give a brief (but thorough) walk-through of my evaluation over my algorithm, giving results to show that everything worked as planned. 3rd, I'm going to respond to some discussion questions posted in the task portion of the assignment. Let us begin!
 
 ## Implementation and Design Choices
 
@@ -103,4 +103,4 @@ Because my implementation never converts constraints or other things to integer 
 
 ## Conclusion
 
-Constraint Satisfaction Problems were actually quite fun! The general-solving algorithms is indeed quite intriguing -- there are so many different kinds of intresting problems to solve, after all! I look forward to the next AI adventuer! :sparkles:
+Solving a sudoku with AI with internal logic is quite interesting and fun! Instead of using purely reflex mechanisms, they are using processes of reasoning that operate on internal representations of knowledge now. Can't wait to see the next assignment and get it done! :sparkles:
