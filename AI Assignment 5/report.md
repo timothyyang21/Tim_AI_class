@@ -45,28 +45,53 @@ Due to time constraints, please take a look at the code itself to further get a 
 
 ## Evaluation
 
-Now I quickly go through some results for evaluation of my code. First, we have the results of the gsat with all_cells.cnf, with h set to 0.7 which means there's only 0.3 chance of randomization.
-
-
-Here's the results of the walksat algorithm with all_cells.cnf, with p set to 0.3 which means 0.7 chance of randomization.
-
-The last few variables are always the hardest to get to...
+Now I quickly go through some results for evaluation of my code. First, we have the results of the gsat with all_cells.cnf, with h set to 0.9 which means there's only 0.1 chance of randomization.
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%205/getting_so_close.png">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%205/gsat_all_cells_0.9.png" height="100%" width="100%">
 </p>
 
-They are getting so close!
+As one can see, it took 930 seconds to run through the gsat algorithm. At each iteration, it picks from the max_list which contains variables that have the most connections to unsatisfied clauses, and changes that to reduce the number of unsatisfied clauses left, which shows that the algorithm is working:
 
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%205/soooo_close.png">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%205/algorithm_working.png" height="100%" width="100%">
 </p>
+
+Notice how when situation 1 shows up, the number of clauses unsatisfied actually didn't get reduced (it only get reduced by situation 2 - strategic cleaning); this is because situation 1 is all about random picking of variable to flip in gsat, and more likely than not it will pick a wrong number to flip when the algorithm is at its very end (with an easy cnf file).
+
+Here's the results of the walksat algorithm with all_cells.cnf, with p set to 0.9 which means 0.1 chance of randomization.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%205/walksat_all_cells_0.9.png" height="100%" width="100%">
+</p>
+
+In walksat with the same condition, it takes a much less time to get to a solution than gsat, with only 839 seconds. This is due to the clever randomization part of walksat, instead of choosing a pure random variable, it chooses a variable randomly from a pool of unsatisfied clauses with that specific variable. Only 0.1 of the time does it go into the randomization situation in this case though, so it still took a lot of situation 2 to solve the problem, which is why it's still considered slow. However, let's see what happens when I adjust the p value from 0.9 to 0.3 for the all_cells.cnf file:
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%205/walksat_all_cells_0.3.png" height="100%" width="100%">
+</p>
+
+The time spent decreased to 240 seconds, or 4 minutes. This is simply because for the all_cells.cnf satisfaction logic problem, all the conjunctive constraints are very straightforward and has little overlaps. In fact, when I set the p = 0, the result is a little over 1 second:
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%205/walksat_all_cells_0.png" height="100%" width="100%">
+</p>
+
+This is due to the fact that the algorithm doesn't need to go through situation 2 at all, all it has to do is to go through situation 1 and all variables chosen would work. But that's not really interesting, let's see what happens when we increase our difficulty level for walksat 1 step further to rows.cnf, with p set to 0.3.
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%205/walksat_rows_0.3.png" height="100%" width="100%">
+</p>
+
+With p = 0.3, the walksat algorithm took 1312 seconds to run rows.cnf. This makes sense because now the algorithm has to jump around and jump out of local maximas in order to get to a complete solution. Towards the end, when the unsatisfied clauses were only 3 or so, it can be observed clearly that it stayed there for a while, keep jumping around trying new numbers, before finding a solution.
+
+
 
 Anyways, I have further verified my code by breaking my code down, adding print statements, and checking the sequences individually. Thank you!
 
 ## Responses to Discussion Questions
 
-There happens to not have any discussion questions listed in the required test. I will still discuss a little bit of my findings, though. First, I found that gsat takes a lot more time to solve then same difficulty-level cnfs than walksat. This is surely due to the fact that walksat chooses to randomize only on the ones with unsatisfied clauses, rather than just choosing random ones -- ones in which they could have already been satisfied -- to work with. Also, partly due to this, for the easier cnfs, for gsat, at least, having the arbitrary number up actually helps with finding the solution faster. This is presumebly due to the fact that having more chances of randomly choosing variables to flip will lead to more chances of the solution being unstable, and thus needing to go through stabilizing steps even more. I have quite a high confidence that for all_cells.cnf, a h value of 0.99 (meaning there's only a 0.01 chance of randomizing), will allow the gsat algorithm to go the fastest it can be. Or maybe not, because the randomization value is very important to allow us to jump out of the local minima; I can totally see the use of this more for later, more difficult cnf. At first I set it to 0.3 for h for all_cells.cnf for gsat, and it took more than 30 minutes and still couldn't get the solution (it was getting close though, there were only around 14 unsatisfied clauses left). Then, I set h to 0.7 for gsat, which solve the problem in 20 minutes. Each iteration took about 20 seconds. This number makes sense as the algorithm will have to go through the cnf file again and again to check the validity of all clauses.
+There happens to not have any discussion questions listed in the required test. I will still discuss a little bit of my findings, though. First, I found that gsat takes a lot more time to solve then same difficulty-level cnfs than walksat. This is surely due to the fact that walksat chooses to randomize only on the ones with unsatisfied clauses, rather than just choosing random ones -- ones in which they could have already been satisfied -- to work with. Also, partly due to this, for the easier cnfs, for gsat, at least, having the arbitrary number up actually helps with finding the solution faster. This is presumebly due to the fact that having more chances of randomly choosing variables to flip will lead to more chances of the solution being unstable, and thus needing to go through stabilizing steps even more. I have quite a high confidence that for all_cells.cnf, a h value of 0.99 (meaning there's only a 0.01 chance of randomizing), will allow the gsat algorithm to go the fastest it can be. Or maybe not, because the randomization value is very important to allow us to jump out of the local minima; I can totally see the use of this more for later, more difficult cnf. When I set h = 0.9, even gsat gets to the solution in about 15 minutes. Each iteration took about 20 seconds. This number makes sense as the algorithm will have to go through the cnf file again and again to check the validity of all clauses, and each iteration only flips one variable, which may only have influence over 1 to several unsatisfied clauses.
 
 The randomization steps essentially helps the algorithms jump away from local minima, while the strategic steps make sure that the algorithm is always getting to some kind of high score (higher the number of satisfied clause means getting closer to getting done). The push and pull of these two allows the algorithm to eventually find a solution.
 
