@@ -47,11 +47,22 @@ Due to time constraints, please take a look at the code itself to further get a 
 
 Now I quickly go through some results for evaluation of my code. First, we have the results of the gsat with all_cells.cnf, with h set to 0.7 which means there's only 0.3 chance of randomization.
 
+
+Here's the results of the walksat algorithm with all_cells.cnf, with p set to 0.3 which means 0.7 chance of randomization.
+
+The last few variables are always the hardest to get to...
+
 <p align="center">
-  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%204/Map%20Coloring%20CSP%20Results%201.png" height="100%" width="100%">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%205/getting_so_close.png">
 </p>
 
-I have further verified my code by breaking my code down, adding print statements, and checking the sequences individually.
+They are getting so close!
+
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%205/soooo_close.png">
+</p>
+
+Anyways, I have further verified my code by breaking my code down, adding print statements, and checking the sequences individually. Thank you!
 
 ## Responses to Discussion Questions
 
