@@ -85,9 +85,17 @@ This is due to the fact that the algorithm doesn't need to go through situation 
 
 With p = 0.3, the walksat algorithm took 1312 seconds to run rows.cnf. This makes sense because now the algorithm has to jump around and jump out of local maximas in order to get to a complete solution. Towards the end, when the unsatisfied clauses were only 3 or so, it can be observed clearly that it stayed there for a while, keep jumping around trying new numbers, before finding a solution.
 
+Lastly, I also tested my walksat algorithm for rows_and_cols.cnf, with p = 0.1 because I thought that'd allow the algorithm to run faster. 
 
+Due to time constraints, I'm unale to wait out for the solution before turning in the report, here's a working-in-progress report, though:
 
-Anyways, I have further verified my code by breaking my code down, adding print statements, and checking the sequences individually. Thank you!
+<p align="center">
+  <img src="https://github.com/timothyyang21/Tim_AI_class/blob/master/AI%20Assignment%205/walksat_rows_and_cols_0.3.png" height="100%" width="100%">
+</p>
+
+Just like last time, it revolves around a few unsatisfied variables and must jump between them to try to jump out of the local maxima. I suspect this will take 1.5 times than last time. I shall continue to wait out the result to see how everything works out!
+
+Anyways, I have further verified my code by breaking my code down, adding print statements, and checking the sequences individually. Thank you so much!
 
 ## Responses to Discussion Questions
 
